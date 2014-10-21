@@ -16,4 +16,4 @@ Hopefully one day we'll be able to rewrite the haxe plugin in haxe!
 - add [missing features](http://sublime-text-unofficial-documentation.readthedocs.org/en/latest/reference/api.html#sublime_plugin.EventListener.on_query_completions)
 
 --------------
-haxe 3.2.0, [nightly](http://hxbuilds.s3-website-us-east-1.amazonaws.com/builds/haxe/)
+haxe 3.2.0, [(nightly)](http://hxbuilds.s3-website-us-east-1.amazonaws.com/builds/haxe/)
