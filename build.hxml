@@ -1,0 +1,3 @@
+-python bin/haxe-test-plugin.py
+-main Main
+-cp src
