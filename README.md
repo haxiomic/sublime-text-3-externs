@@ -2,7 +2,7 @@
 
 Since haxe now supports python, it is possible to develop sublime text plugins with haxe.
 
-Currently the basic hello world plugin works - but there's not much left to do to finish the externs.
+Currently only the basic hello world plugin works - but there's not much left to do to finish the externs.
 
 Hopefully one day we'll be able to rewrite the haxe plugin in haxe!
 
