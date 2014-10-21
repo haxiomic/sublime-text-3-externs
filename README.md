@@ -1,4 +1,4 @@
-#Sublime Text Plugins in Haxe
+#Sublime Text Haxe Externs
 
 Since haxe now supports python, it is possible to develop sublime text plugins with haxe.
 
