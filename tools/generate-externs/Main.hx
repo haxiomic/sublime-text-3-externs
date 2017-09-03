@@ -107,6 +107,11 @@ class Main{
 			});
 		}
 
+		// Clean up types
+		for(type in haxeTypes){
+			deduplicateFields(type);
+		}
+
 		// Save result
 		for(type in haxeTypes){
 			var printer = new haxe.macro.Printer();
@@ -179,7 +184,7 @@ class Main{
 							doc: cleanDoc(row[2]),
 							kind: FFun({args: methodDef.args, ret: parseType(row[1]), expr: null}),
 							pos: nullPos,
-							access: row[0] == 'class methods' ? [AStatic] : [],
+							access: (row[0] == 'class methods' || type == Module) ? [AStatic] : [],
 						});
 					}
 
@@ -199,7 +204,8 @@ class Main{
 							name: row[0],
 							doc: cleanDoc(row[2]),
 							kind: FVar(parseType(row[1])),
-							pos: nullPos
+							pos: nullPos,
+							access: row[0] == 'class methods' ? [AStatic] : []
 						});
 					}
 
@@ -221,11 +227,11 @@ class Main{
 			kind: TDClass(null, null, false),
 			isExtern: true,
 			name: toClassNameCase(path[path.length-1]),
-			meta: type == Class ? [{
+			meta: [{
 				name: ':pythonImport',
-				params: path.map(function(p) return {expr: EConst(CString(p)), pos: nullPos}),
+				params: path.map(function(p) return macro '$p'),
 				pos: nullPos
-			}] : [],
+			}],
 			fields: fields,
 			pos: nullPos,
 		}
@@ -278,7 +284,7 @@ class Main{
 				type = macro :Array<$type>;
 
 			args.push({
-				name: name,
+				name: cleanName(name),
 				opt: optional,
 				type: type
 			});
@@ -313,8 +319,8 @@ class Main{
 				for(param in tupleParams) parseType(param)
 			];
 			type = TPath({
-				pack: ['python'],
-				name: 'Tuple',
+				pack: ['python', 'Tuple'],
+				name: 'Tuple' + paramTypes.length,
 				params: [
 					for(paramType in paramTypes) TPType(paramType)
 				]
@@ -372,11 +378,11 @@ class Main{
 			case 'dip': return macro :Float;
 			case 'int': return macro :Int;
 			case 'byte': return macro :python.Bytes;
-			case 'dict': return macro :python.Dict;
+			case 'dict': return macro :python.Dict<String, Any>;
 			case 'list': return macro :List<Any>; //@! needs review
-			case 'location': return macro: python.Tuple<String, String, python.Tuple<Int, Int>>;
-			case 'vector': return macro: python.Tuple<Int, Int>;
-			case 'tuple': return macro: python.Tuple<Any>;
+			case 'location': return macro: python.Tuple.Tuple3<String, String, python.Tuple.Tuple2<Int, Int>>;
+			case 'vector': return macro: python.Tuple.Tuple2<Int, Int>;
+			case 'tuple': return macro: python.Tuple<Any>; //@! needs review
 
 			// less-precise 
 			case 'forward': return macro: Bool;
@@ -408,7 +414,7 @@ class Main{
 
 			case 'variable': return macro :haxe.DynamicAccess<Any>;
 
-			case 'data': return macro :python.Dict;
+			case 'data': return macro :python.Dict<String, Any>;
 
 			// these would be better handled as enums but Int should do for now
 			case 'classe': return macro :Int;
@@ -500,6 +506,59 @@ class Main{
 		}
 	}
 
+	function deduplicateFields(type:TypeDefinition){
+		var depulicatedFields = new Array<Field>();
+
+		/*
+		// Dedupe via rename and alias
+		for(f1 in type.fields){
+			var duplicateFields = type.fields.filter(function(f2) return (f2.name == f1.name) && (f1 != f2));
+			if (duplicateFields.length > 0) {
+				var nativeName = f1.name;
+				f1.name = f1.name + (duplicateFields.length + 1);
+				if (f1.meta == null) f1.meta = [];
+				f1.meta.push({
+					name: ':native',
+					params: [macro '$nativeName'],
+					pos: nullPos,
+				});
+			}
+		}
+		*/
+
+		// Dedupe via @:overload metadata
+		var i = type.fields.length - 1;
+		while(i >= 0){
+			var f1 = type.fields[i];
+			var duplicateFields = type.fields.filter(function(f2) return (f2.name == f1.name) && (f1 != f2));
+			if (duplicateFields.length > 0){
+				// add an overload to the lowest-indexed matching field
+				var mainField = duplicateFields[0];
+				if (mainField.meta == null) mainField.meta = [];
+
+				var fun:Function = switch f1.kind {
+					case FFun(f): f;
+					default: null;
+				}
+
+				fun.expr = macro {};
+
+				mainField.meta.push({
+					name: ":overload",
+					params: [{
+						expr:EFunction(null, fun),
+						pos: nullPos
+					}],
+					pos: nullPos
+				});
+
+				// remove current field
+				type.fields.splice(i, 1);
+			}
+			i--;
+		}
+	}
+
 	inline function toClassNameCase(str:String) {
 		return str.charAt(0).toUpperCase() + str.substr(1);
 	}
@@ -523,7 +582,53 @@ class Main{
 		return StringTools.trim(filteredLines.join('\n'));
 	}
 
+	function cleanName(name:String){
+		return disallowedNames.indexOf(name) != -1 ? '_$name' : name;
+	}
+
 	static var nullPos = { min:0, max:0, file:"" };
+	static var disallowedNames = [
+		'break',
+		'case',
+		'cast',
+		'catch',
+		'class',
+		'continue',
+		'default',
+		'do',
+		'dynamic',
+		'else',
+		'enum',
+		'extends',
+		'extern',
+		'false',
+		'for',
+		'function',
+		'if',
+		'implements',
+		'import',
+		'in',
+		'inline',
+		'interface',
+		'new',
+		'null',
+		'override',
+		'package',
+		'private',
+		'public',
+		'return',
+		'static',
+		'switch',
+		'this',
+		'throw',
+		'true',
+		'try',
+		'typedef',
+		'untyped',
+		'using',
+		'var',
+		'while'
+	];
 	static function main() new Main();
 
 }
