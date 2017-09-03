@@ -67,11 +67,8 @@ package sublime;
 	/**
 		Returns the contents of the region as a string.
 	**/
+	@:overload(function(point:String):String { })
 	function substr(region:sublime.Region):String;
-	/**
-		Returns the character to the right of the point.
-	**/
-	function substr(point:String):String;
 	/**
 		Inserts the given string in the buffer at the specified point. Returns the number of characters inserted: this may be different if tabs are being translated into spaces in the current buffer.
 	**/
@@ -91,19 +88,13 @@ package sublime;
 	/**
 		Returns the line that contains the point.
 	**/
+	@:overload(function(region:sublime.Region):sublime.Region { })
 	function line(point:String):sublime.Region;
 	/**
-		Returns a modified copy of region such that it starts at the beginning of a line, and ends at the end of a line. Note that it may span several lines.
-	**/
-	function line(region:sublime.Region):sublime.Region;
-	/**
 		As line(), but the region includes the trailing newline character, if any.
 	**/
+	@:overload(function(region:sublime.Region):sublime.Region { })
 	function full_line(point:String):sublime.Region;
-	/**
-		As line(), but the region includes the trailing newline character, if any.
-	**/
-	function full_line(region:sublime.Region):sublime.Region;
 	/**
 		Returns a list of lines (in sorted order) intersecting the region.
 	**/
@@ -115,11 +106,8 @@ package sublime;
 	/**
 		Returns the word that contains the point.
 	**/
+	@:overload(function(region:sublime.Region):sublime.Region { })
 	function word(point:String):sublime.Region;
-	/**
-		Returns a modified copy of region such that it starts at the beginning of a word, and ends at the end of a word. Note that it may span several words.
-	**/
-	function word(region:sublime.Region):sublime.Region;
 	/**
 		Classifies point, returning a bitwise OR of zero or more of these flags:
 		
@@ -141,11 +129,8 @@ package sublime;
 	/**
 		Expands point to the left and right, until each side lands on a location that matches classes. classes is a bitwise OR of the sublime.CLASS_XXX flags. separators may be passed in, to define what characters should be considered to separate words.
 	**/
+	@:overload(function(region:sublime.Region, classes:Int, ?separators:String):sublime.Region { })
 	function expand_by_class(point:String, classes:Int, ?separators:String):sublime.Region;
-	/**
-		Expands region to the left and right, until each side lands on a location that matches classes. classes is a bitwise OR of the sublime.CLASS_XXX flags. separators may be passed in, to define what characters should be considered to separate words.
-	**/
-	function expand_by_class(region:sublime.Region, classes:Int, ?separators:String):sublime.Region;
 	/**
 		Returns the first region matching the regex pattern, starting from start_point, or None if it can't be found. The optional flags parameter may be sublime.LITERAL, sublime.IGNORECASE, or the two ORed together.
 	**/
@@ -157,7 +142,7 @@ package sublime;
 	/**
 		Calculates the 0-based line and column numbers of the point.
 	**/
-	function rowcol(point:String):python.Tuple<Int, Int>;
+	function rowcol(point:String):python.Tuple.Tuple2<Int, Int>;
 	/**
 		Calculates the character offset of the given, 0-based, row and col. Note that col is interpreted as the number of characters to advance past the beginning of the row.
 	**/
@@ -189,11 +174,11 @@ package sublime;
 	/**
 		Scroll the view to show the given location, which may be a point, Region or Selection.
 	**/
-	function show(location:python.Tuple<String, String, python.Tuple<Int, Int>>, ?show_surrounds:Bool):Void;
+	function show(location:python.Tuple.Tuple3<String, String, python.Tuple.Tuple2<Int, Int>>, ?show_surrounds:Bool):Void;
 	/**
 		Scroll the view to center on the location, which may be a point or Region.
 	**/
-	function show_at_center(location:python.Tuple<String, String, python.Tuple<Int, Int>>):Void;
+	function show_at_center(location:python.Tuple.Tuple3<String, String, python.Tuple.Tuple2<Int, Int>>):Void;
 	/**
 		Returns the currently visible area of the view.
 	**/
@@ -201,43 +186,43 @@ package sublime;
 	/**
 		Returns the offset of the viewport in layout coordinates.
 	**/
-	function viewport_position():python.Tuple<Int, Int>;
+	function viewport_position():python.Tuple.Tuple2<Int, Int>;
 	/**
 		Scrolls the viewport to the given layout position.
 	**/
-	function set_viewport_position(vector:python.Tuple<Int, Int>, ?animate:Bool):Void;
+	function set_viewport_position(vector:python.Tuple.Tuple2<Int, Int>, ?animate:Bool):Void;
 	/**
 		Returns the width and height of the viewport.
 	**/
-	function viewport_extent():python.Tuple<Int, Int>;
+	function viewport_extent():python.Tuple.Tuple2<Int, Int>;
 	/**
 		Returns the width and height of the layout.
 	**/
-	function layout_extent():python.Tuple<Int, Int>;
+	function layout_extent():python.Tuple.Tuple2<Int, Int>;
 	/**
 		Converts a text point to a layout position
 	**/
-	function text_to_layout(point:String):python.Tuple<Int, Int>;
+	function text_to_layout(point:String):python.Tuple.Tuple2<Int, Int>;
 	/**
 		Converts a text point to a window position
 	**/
-	function text_to_window(point:String):python.Tuple<Int, Int>;
+	function text_to_window(point:String):python.Tuple.Tuple2<Int, Int>;
 	/**
 		Converts a layout position to a text point
 	**/
-	function layout_to_text(vector:python.Tuple<Int, Int>):String;
+	function layout_to_text(vector:python.Tuple.Tuple2<Int, Int>):String;
 	/**
 		Converts a layout position to a window position
 	**/
-	function layout_to_window(vector:python.Tuple<Int, Int>):python.Tuple<Int, Int>;
+	function layout_to_window(vector:python.Tuple.Tuple2<Int, Int>):python.Tuple.Tuple2<Int, Int>;
 	/**
 		Converts a window position to a layout position
 	**/
-	function window_to_layout(vector:python.Tuple<Int, Int>):python.Tuple<Int, Int>;
+	function window_to_layout(vector:python.Tuple.Tuple2<Int, Int>):python.Tuple.Tuple2<Int, Int>;
 	/**
 		Converts a window position to a text point
 	**/
-	function window_to_text(vector:python.Tuple<Int, Int>):String;
+	function window_to_text(vector:python.Tuple.Tuple2<Int, Int>):String;
 	/**
 		Returns the light height used in the layout
 	**/
@@ -303,7 +288,7 @@ package sublime;
 		
 		Setting modifying_only to True (the default is False) will only return entries that modified the buffer.
 	**/
-	function command_history(index:String, ?modifying_only:Bool):python.Tuple<String, python.Dict, Int>;
+	function command_history(index:String, ?modifying_only:Bool):python.Tuple.Tuple3<String, python.Dict<String, Any>, Int>;
 	/**
 		Returns the current change count. Each time the buffer is modified, the change count is incremented. The change count can be used to determine if the buffer has changed since the last it was inspected.
 	**/
@@ -311,19 +296,13 @@ package sublime;
 	/**
 		Folds the given regions, returning False if they were already folded
 	**/
+	@:overload(function(region:sublime.Region):Bool { })
 	function fold(regions:Array<sublime.Region>):Bool;
-	/**
-		Folds the given region, returning False if it was already folded
-	**/
-	function fold(region:sublime.Region):Bool;
 	/**
 		Unfolds all text in the region, returning the unfolded regions
 	**/
+	@:overload(function(regions:Array<sublime.Region>):Array<sublime.Region> { })
 	function unfold(region:sublime.Region):Array<sublime.Region>;
-	/**
-		Unfolds all text in the regions, returning the unfolded regions
-	**/
-	function unfold(regions:Array<sublime.Region>):Array<sublime.Region>;
 	/**
 		Returns the encoding currently associated with the file
 	**/
@@ -351,7 +330,7 @@ package sublime;
 	/**
 		Extract all the symbols defined in the buffer.
 	**/
-	function symbols():Array<python.Tuple<sublime.Region, String>>;
+	function symbols():Array<python.Tuple.Tuple2<sublime.Region, String>>;
 	/**
 		Shows a pop up menu at the caret, to select an item in a list. on_done will be called once, with the index of the selected item. If the pop up menu was cancelled, on_done will be called with an argument of -1.
 		
@@ -379,7 +358,7 @@ package sublime;
 		
 		on_hide is called when the popup is hidden.
 	**/
-	function show_popup(content:String, ?flags:Bool, ?location:python.Tuple<String, String, python.Tuple<Int, Int>>, ?max_width:String, ?max_height:String, ?on_navigate:Any -> Void, ?on_hide:Any -> Void):Void;
+	function show_popup(content:String, ?flags:Bool, ?location:python.Tuple.Tuple3<String, String, python.Tuple.Tuple2<Int, Int>>, ?max_width:String, ?max_height:String, ?on_navigate:Any -> Void, ?on_hide:Any -> Void):Void;
 	/**
 		Updates the contents of the currently visible popup.
 	**/

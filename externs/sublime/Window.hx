@@ -77,7 +77,7 @@ package sublime;
 	/**
 		Returns the group, and index within the group of the sheet. Returns -1 if not found.
 	**/
-	function get_sheet_index(sheet:sublime.Sheet):python.Tuple<Int, Int>;
+	function get_sheet_index(sheet:sublime.Sheet):python.Tuple.Tuple2<Int, Int>;
 	/**
 		Moves the sheet to the given group and index.
 	**/
@@ -85,7 +85,7 @@ package sublime;
 	/**
 		Returns the group, and index within the group of the view. Returns -1 if not found.
 	**/
-	function get_view_index(view:sublime.View):python.Tuple<Int, Int>;
+	function get_view_index(view:sublime.View):python.Tuple.Tuple2<Int, Int>;
 	/**
 		Moves the view to the given group and index.
 	**/
@@ -145,11 +145,11 @@ package sublime;
 	/**
 		Returns the project data associated with the current window. The data is in the same format as the contents of a .sublime-project file.
 	**/
-	function project_data():python.Dict;
+	function project_data():python.Dict<String, Any>;
 	/**
 		Updates the project data associated with the current window. If the window is associated with a .sublime-project file, the project file will be updated on disk, otherwise the window will store the data internally.
 	**/
-	function set_project_data(data:python.Dict):Void;
+	function set_project_data(data:python.Dict<String, Any>):Void;
 	/**
 		Runs the named WindowCommand with the (optional) given args. This method is able to run any sort of command, dispatching the command via input focus.
 	**/
@@ -193,15 +193,15 @@ package sublime;
 	/**
 		Returns all locations where the symbol is defined across files in the current project.
 	**/
-	function lookup_symbol_in_index(symbol:String):Array<python.Tuple<String, String, python.Tuple<Int, Int>>>;
+	function lookup_symbol_in_index(symbol:String):Array<python.Tuple.Tuple3<String, String, python.Tuple.Tuple2<Int, Int>>>;
 	/**
 		Returns all locations where the symbol is defined across open files.
 	**/
-	function lookup_symbol_in_open_files(symbol:String):Array<python.Tuple<String, String, python.Tuple<Int, Int>>>;
+	function lookup_symbol_in_open_files(symbol:String):Array<python.Tuple.Tuple3<String, String, python.Tuple.Tuple2<Int, Int>>>;
 	/**
 		Returns a dictionary of strings populated with contextual keys:
 		
 		packages, platform, file, file_path, file_name, file_base_name, file_extension, folder, project, project_path, project_name, project_base_name, project_extension. This dict is suitable for passing to sublime.expand_variables().
 	**/
-	function extract_variables():python.Dict;
+	function extract_variables():python.Dict<String, Any>;
 }

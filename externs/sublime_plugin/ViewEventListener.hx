@@ -95,7 +95,7 @@ package sublime_plugin;
 		sublime.INHIBIT_WORD_COMPLETIONS | sublime.INHIBIT_EXPLICIT_COMPLETIONS
 		)
 	**/
-	function on_query_completions(prefix:String, locations:python.Tuple<String, String, python.Tuple<Int, Int>>):Any;
+	function on_query_completions(prefix:String, locations:python.Tuple.Tuple3<String, String, python.Tuple.Tuple2<Int, Int>>):Any;
 	/**
 		Called when determining to trigger a key binding with the given context key. If the plugin knows how to respond to the context, it should return either True of False. If the context is unknown, it should return None.
 		

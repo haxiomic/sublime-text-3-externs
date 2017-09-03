@@ -155,15 +155,15 @@ package sublime_plugin;
 		sublime.INHIBIT_WORD_COMPLETIONS | sublime.INHIBIT_EXPLICIT_COMPLETIONS
 		)
 	**/
-	function on_query_completions(view:sublime.View, prefix:String, locations:python.Tuple<String, String, python.Tuple<Int, Int>>):Any;
+	function on_query_completions(view:sublime.View, prefix:String, locations:python.Tuple.Tuple3<String, String, python.Tuple.Tuple2<Int, Int>>):Any;
 	/**
 		Called when a text command is issued. The listener may return a (command, arguments) tuple to rewrite the command, or None to run the command unmodified.
 	**/
-	function on_text_command(view:sublime.View, command_name:String, args:haxe.DynamicAccess<Any>):python.Tuple<String, python.Dict>;
+	function on_text_command(view:sublime.View, command_name:String, args:haxe.DynamicAccess<Any>):python.Tuple.Tuple2<String, python.Dict<String, Any>>;
 	/**
 		Called when a window command is issued. The listener may return a (command, arguments) tuple to rewrite the command, or None to run the command unmodified.
 	**/
-	function on_window_command(window:sublime.Window, command_name:String, args:haxe.DynamicAccess<Any>):python.Tuple<String, python.Dict>;
+	function on_window_command(window:sublime.Window, command_name:String, args:haxe.DynamicAccess<Any>):python.Tuple.Tuple2<String, python.Dict<String, Any>>;
 	/**
 		Called after a text command has been executed.
 	**/

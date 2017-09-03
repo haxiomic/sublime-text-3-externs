@@ -3,7 +3,7 @@ package sublime;
 	/**
 		Returns the named setting, or default if it's not defined. If not passed, default will have a value of None.
 	**/
-	function get(name:String, ?default:Any):Any;
+	function get(name:String, ?_default:Any):Any;
 	/**
 		Sets the named setting. Only primitive types, lists, and dicts are accepted.
 	**/
