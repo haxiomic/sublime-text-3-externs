@@ -2,5 +2,5 @@
 -lib hxnodejs
 -lib scriptutils
 -cp lib
--js built/index.js
+-js _built/index.js
 -dce full

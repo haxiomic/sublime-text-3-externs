@@ -1,6 +1,6 @@
 -main TestPlugin
 -cp ../externs
 -cp src
--python built/test_plugin.py
+-python _built/test_plugin.py
 -dce std
 -D analyzer
