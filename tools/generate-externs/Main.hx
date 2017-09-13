@@ -1,6 +1,5 @@
 import haxe.io.Path;
 import haxe.macro.Expr;
-import scriptutils.Log;
 
 @:enum
 abstract PythonType(String) {
@@ -18,7 +17,7 @@ typedef Table = {
 class Main{
 
 	var sublimeApiUrl = 'https://www.sublimetext.com/docs/3/api_reference.html';
-	var downloadDir = 'download';
+	var downloadDir = '_download';
 	var externDir = '../../externs';
 	var titlePatern = ~/([\w.]+)\s+(Class|Module)/i;
 	var titleTagName = 'h2';
@@ -55,7 +54,7 @@ class Main{
 			var titleText = [for(node in el.nodes) node.toText()].join(' ');
 
 			if (!titlePatern.match(titleText)) {
-				Log.warn('Ignoring title "${titleText}"');
+				Console.warn('Ignoring title "${titleText}"');
 				continue;
 			}
 
@@ -96,7 +95,7 @@ class Main{
 			var expectedClassPath = parentIsClass ? pack.join('.') : pack.concat([toClassNameCase(parent)]).join('.');
 			var matchingTypes = haxeTypes.filter(function(type) return type.pack.concat([type.name]).join('.') == expectedClassPath);
 			if (matchingTypes.length == 0){
-				Log.warn('Could not find class for enum "$enumPath"');
+				Console.warn('Could not find class for enum "$enumPath"');
 			}
 
 			matchingTypes[0].fields.push({
@@ -123,7 +122,7 @@ class Main{
 			var savePath = Path.join([externDir, directory, filename]);
 			sys.FileSystem.createDirectory(Path.directory(savePath));
 			sys.io.File.saveContent(savePath, haxeStr);
-			Log.success('Saved ${savePath}');
+			Console.success('Saved ${savePath}');
 		}
 	}
 
@@ -151,7 +150,7 @@ class Main{
 		var header = tableRows.shift();// remove first element
 
 		if (header == null) {
-			Log.warn('Table has no rows');
+			Console.warn('Table has no rows');
 			return null;
 		}
 
@@ -210,7 +209,7 @@ class Main{
 					}
 
 				case columns:
-					Log.warn('Unknown table kind "$columns"');
+					Console.warn('Unknown table kind "$columns"');
 			}
 		}
 
@@ -349,7 +348,7 @@ class Main{
 				type = macro :Array<$type>;
 			return type;
 		} else {
-			Log.warn('Cannot parse type "$typeString"');
+			Console.warn('Cannot parse type "$typeString"');
 			return macro :Any;
 		}
 	}
@@ -471,7 +470,7 @@ class Main{
 			return macro :EReg;
 		}
 
-		Log.warn('Cannot guess type for "$name"');
+		Console.warn('Cannot guess type for "$name"');
 
 		return macro :Any;
 	}
@@ -483,7 +482,7 @@ class Main{
 		for(table in tables){
 			var descriptionIdx = table.columns.indexOf('description');
 			if(descriptionIdx == -1){
-				Log.warn('Could not find description column');
+				Console.warn('Could not find description column');
 				continue;
 			}
 
@@ -629,6 +628,13 @@ class Main{
 		'var',
 		'while'
 	];
-	static function main() new Main();
+
+	static function main() {
+		// console setup
+		Console.warnPrefix = '<b><yellow>Warning ><//> ';
+		Console.errorPrefix = '<b><red>  Error ><//> ';
+		Console.successPrefix = '<b><light_green>Success ><//> ';
+		new Main();
+	}
 
 }

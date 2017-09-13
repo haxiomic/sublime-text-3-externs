@@ -1,6 +1,6 @@
 -main Main
 -lib hxnodejs
--lib scriptutils
+-lib console.hx
 -cp lib
 -js _built/index.js
 -dce full
