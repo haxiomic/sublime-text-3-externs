@@ -53,6 +53,26 @@ package sublime_plugin;
 	**/
 	function on_hover(point:String, hover_zone:Int):Void;
 	/**
+		Called when determining to trigger a key binding with the given context key. If the plugin knows how to respond to the context, it should return either True of False. If the context is unknown, it should return None.
+		
+		operator is one of:
+		
+		sublime.OP_EQUAL: Is the value of the context equal to the operand?
+		
+		sublime.OP_NOT_EQUAL: Is the value of the context not equal to the operand?
+		
+		sublime.OP_REGEX_MATCH: Does the value of the context match the regex given in operand?
+		
+		sublime.OP_NOT_REGEX_MATCH: Does the value of the context not match the regex given in operand?
+		
+		sublime.OP_REGEX_CONTAINS: Does the value of the context contain a substring matching the regex given in operand?
+		
+		sublime.OP_NOT_REGEX_CONTAINS: Does the value of the context not contain a substring matching the regex given in operand?
+		
+		match_all should be used if the context relates to the selections: does every selection have to match (match_all == True), or is at least one matching enough (match_all == False)?
+	**/
+	function on_query_context(key:String, operator:Int, operand:Any, match_all:Bool):Null<Bool>;
+	/**
 		Called whenever completions are to be presented to the user. The prefix is a unicode string of the text to complete.
 		
 		locations is a list of points. Since this method is called for all completions no matter the syntax, self.view.match_selector(point, relevant_scope) should be called to determine if the point is relevant.
@@ -96,24 +116,4 @@ package sublime_plugin;
 		)
 	**/
 	function on_query_completions(prefix:String, locations:python.Tuple.Tuple3<String, String, python.Tuple.Tuple2<Int, Int>>):Any;
-	/**
-		Called when determining to trigger a key binding with the given context key. If the plugin knows how to respond to the context, it should return either True of False. If the context is unknown, it should return None.
-		
-		operator is one of:
-		
-		sublime.OP_EQUAL: Is the value of the context equal to the operand?
-		
-		sublime.OP_NOT_EQUAL: Is the value of the context not equal to the operand?
-		
-		sublime.OP_REGEX_MATCH: Does the value of the context match the regex given in operand?
-		
-		sublime.OP_NOT_REGEX_MATCH: Does the value of the context not match the regex given in operand?
-		
-		sublime.OP_REGEX_CONTAINS: Does the value of the context contain a substring matching the regex given in operand?
-		
-		sublime.OP_NOT_REGEX_CONTAINS: Does the value of the context not contain a substring matching the regex given in operand?
-		
-		match_all should be used if the context relates to the selections: does every selection have to match (match_all == True), or is at least one matching enough (match_all == False)?
-	**/
-	function on_query_context(key:String, operator:Int, operand:Any, match_all:Bool):Null<Bool>;
 }

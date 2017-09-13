@@ -93,6 +93,10 @@ package sublime;
 	**/
 	static function run_command(string:String, ?args:haxe.DynamicAccess<Any>):Void;
 	/**
+		Returns a list of the commands and args that compromise the currently recorded macro. Each dict will contain the keys command and args.
+	**/
+	static function get_macro():Array<python.Dict<String, Any>>;
+	/**
 		Controls command logging. If enabled, all commands run from key bindings and the menu will be logged to the console.
 	**/
 	static function log_commands(flag:Bool):Void;
