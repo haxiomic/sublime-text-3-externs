@@ -26,15 +26,24 @@ class Main{
 	var enumRegister = new Array<String>();
 
 	function new(){
+		Console.log('Requesting "$sublimeApiUrl"');
 		var req = new haxe.Http(sublimeApiUrl);
 
 		req.onData = function(content: String){
 			// Save html to disk
 			sys.FileSystem.createDirectory(downloadDir);
 			sys.io.File.saveContent(haxe.io.Path.join([downloadDir, 'api-reference.html']), content);
+			Console.log('Downloaded "$sublimeApiUrl"');
 
-			processAPIDocs(content);
+			try {
+				processAPIDocs(content);
+			} catch (msg:String) {
+				Console.error(msg);
+			}
 		}
+
+		req.onStatus = function(status:Int) Console.log('Request status $status');
+		req.onError = function(msg:String) Console.error(msg);
 
 		req.request();
 	}
@@ -631,9 +640,10 @@ class Main{
 
 	static function main() {
 		// console setup
-		Console.warnPrefix = '<b><yellow>Warning ><//> ';
-		Console.errorPrefix = '<b><red>  Error ><//> ';
-		Console.successPrefix = '<b><light_green>Success ><//> ';
+		Console.logPrefix = '<b><dim>    Log:<//> ';
+		Console.warnPrefix = '<b><yellow>Warning:<//> ';
+		Console.errorPrefix = '<b><red>  Error:<//> ';
+		Console.successPrefix = '<b><light_green>Success:<//> ';
 		new Main();
 	}
 
