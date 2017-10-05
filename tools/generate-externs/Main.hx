@@ -466,7 +466,7 @@ class Main{
 		}
 
 		// ends in a callback indicator
-		if (~/(callback)$/i.match(name) || ~/(^on)/i.match(name)) {
+		if (~/(callback)$/i.match(name) || ~/(^on_)/i.match(name)) {
 			return macro :Any->Void;
 		}
 
