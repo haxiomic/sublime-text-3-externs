@@ -17,7 +17,7 @@ package sublime;
 		
 		sublime.TRANSIENT: Open the file as a preview only: it won't have a tab assigned it until modified
 	**/
-	function open_file(file_name:String, ?flags:Bool):sublime.View;
+	function open_file(file_name:String, ?flags:Int):sublime.View;
 	/**
 		Finds the named file in the list of open files, and returns the corresponding View, or None if no such file is open.
 	**/
@@ -163,7 +163,7 @@ package sublime;
 		
 		on_highlighted, if given, will be called every time the highlighted item in the quick panel is changed.
 	**/
-	function show_quick_panel(items:String, on_done:Any -> Void, ?flags:Bool, ?selected_index:Int, ?on_highlighted:Any -> Void):Void;
+	function show_quick_panel(items:String, on_done:Any -> Void, ?flags:Int, ?selected_index:Int, ?on_highlighted:Any -> Void):Void;
 	/**
 		Shows the input panel, to collect a line of input from the user. on_done and on_change, if not None, should both be functions that expect a single string argument. on_cancel should be a function that expects no arguments. The view used for the input widget is returned.
 	**/

@@ -371,8 +371,9 @@ class Main{
 	}
 
 	function guessTypeFromName(name:String):ComplexType {
+		var plural = name.charAt(name.length - 1) == 's';
 		// remove trailing s for plurals
-		if (name.charAt(name.length - 1) == 's'){
+		if (plural){
 			name = name.substr(0, name.length - 1);
 		}
 
@@ -455,7 +456,7 @@ class Main{
 		}
 
 		// ends in an int indicator
-		if (~/(idx|index|limit|timestamp|point|delay|row|col|flags|width|height|depth)$/i.match(name)) {
+		if (~/(idx|index|limit|timestamp|point|delay|row|col|width|height|depth)$/i.match(name) || (plural && ~/flag/i.match(name))) {
 			return macro :Int;
 		}
 

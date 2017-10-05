@@ -134,11 +134,11 @@ package sublime;
 	/**
 		Returns the first region matching the regex pattern, starting from start_point, or None if it can't be found. The optional flags parameter may be sublime.LITERAL, sublime.IGNORECASE, or the two ORed together.
 	**/
-	function find(pattern:EReg, start_point:Int, ?flags:Bool):sublime.Region;
+	function find(pattern:EReg, start_point:Int, ?flags:Int):sublime.Region;
 	/**
 		Returns all (non-overlapping) regions matching the regex pattern. The optional flags parameter may be sublime.LITERAL, sublime.IGNORECASE, or the two ORed together. If a format string is given, then all matches will be formatted with the formatted string and placed into the extractions list.
 	**/
-	function find_all(pattern:EReg, ?flags:Bool, ?format:String, ?extractions:Any):Array<sublime.Region>;
+	function find_all(pattern:EReg, ?flags:Int, ?format:String, ?extractions:Any):Array<sublime.Region>;
 	/**
 		Calculates the 0-based line and column numbers of the point.
 	**/
@@ -260,7 +260,7 @@ package sublime;
 		
 		The underline styles are exclusive, either zero or one of them should be given. If using an underline, sublime.DRAW_NO_FILL and sublime.DRAW_NO_OUTLINE should generally be passed in.
 	**/
-	function add_regions(key:String, regions:Array<sublime.Region>, ?scope:String, ?icon:String, ?flags:Bool):Void;
+	function add_regions(key:String, regions:Array<sublime.Region>, ?scope:String, ?icon:String, ?flags:Int):Void;
 	/**
 		Return the regions associated with the given key, if any
 	**/
@@ -338,7 +338,7 @@ package sublime;
 		
 		flags it currently unused.
 	**/
-	function show_popup_menu(items:String, on_done:Any -> Void, ?flags:Bool):Void;
+	function show_popup_menu(items:String, on_done:Any -> Void, ?flags:Int):Void;
 	/**
 		Shows a popup displaying HTML content.
 		
@@ -358,7 +358,7 @@ package sublime;
 		
 		on_hide is called when the popup is hidden.
 	**/
-	function show_popup(content:String, ?flags:Bool, ?location:python.Tuple.Tuple3<String, String, python.Tuple.Tuple2<Int, Int>>, ?max_width:Int, ?max_height:Int, ?on_navigate:Any -> Void, ?on_hide:Any -> Void):Void;
+	function show_popup(content:String, ?flags:Int, ?location:python.Tuple.Tuple3<String, String, python.Tuple.Tuple2<Int, Int>>, ?max_width:Int, ?max_height:Int, ?on_navigate:Any -> Void, ?on_hide:Any -> Void):Void;
 	/**
 		Updates the contents of the currently visible popup.
 	**/
