@@ -47,6 +47,6 @@ package sublime;
 	/**
 		Returns True iff the given region is a subset.
 	**/
-	@:overload(function(point:String):Bool { })
+	@:overload(function(point:Int):Bool { })
 	function contains(region:sublime.Region):Bool;
 }

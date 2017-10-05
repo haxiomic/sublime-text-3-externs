@@ -3,11 +3,11 @@ package sublime;
 	/**
 		Runs the callback in the main thread after the given delay (in milliseconds). Callbacks with an equal delay will be run in the order they were added.
 	**/
-	static function set_timeout(callback:Any -> Void, delay:String):Void;
+	static function set_timeout(callback:Any -> Void, delay:Int):Void;
 	/**
 		Runs the callback on an alternate thread after the given delay (in milliseconds).
 	**/
-	static function set_timeout_async(callback:Any -> Void, delay:String):Void;
+	static function set_timeout_async(callback:Any -> Void, delay:Int):Void;
 	/**
 		Displays an error dialog to the user.
 	**/
@@ -79,7 +79,7 @@ package sublime;
 	/**
 		Returns the contents of the clipboard. size_limit is there to protect against unnecessarily large data, defaults to 16,777,216 characters
 	**/
-	static function get_clipboard(?size_limit:String):String;
+	static function get_clipboard(?size_limit:Int):String;
 	/**
 		Sets the contents of the clipboard.
 	**/

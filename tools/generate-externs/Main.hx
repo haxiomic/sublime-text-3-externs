@@ -456,7 +456,7 @@ class Main{
 
 		// ends in an int indicator
 		if (~/(idx|index|limit|timestamp|point|delay|row|col|flags|width|height|depth)$/i.match(name)) {
-			return macro :String;
+			return macro :Int;
 		}
 
 		// ends in a bool indicator

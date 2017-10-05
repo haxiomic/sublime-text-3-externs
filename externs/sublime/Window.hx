@@ -81,7 +81,7 @@ package sublime;
 	/**
 		Moves the sheet to the given group and index.
 	**/
-	function set_sheet_index(sheet:sublime.Sheet, group:Int, index:String):Void;
+	function set_sheet_index(sheet:sublime.Sheet, group:Int, index:Int):Void;
 	/**
 		Returns the group, and index within the group of the view. Returns -1 if not found.
 	**/
@@ -89,7 +89,7 @@ package sublime;
 	/**
 		Moves the view to the given group and index.
 	**/
-	function set_view_index(view:sublime.View, group:Int, index:String):Void;
+	function set_view_index(view:sublime.View, group:Int, index:Int):Void;
 	/**
 		Show a message in the status bar.
 	**/
@@ -163,7 +163,7 @@ package sublime;
 		
 		on_highlighted, if given, will be called every time the highlighted item in the quick panel is changed.
 	**/
-	function show_quick_panel(items:String, on_done:Any -> Void, ?flags:Bool, ?selected_index:String, ?on_highlighted:Any -> Void):Void;
+	function show_quick_panel(items:String, on_done:Any -> Void, ?flags:Bool, ?selected_index:Int, ?on_highlighted:Any -> Void):Void;
 	/**
 		Shows the input panel, to collect a line of input from the user. on_done and on_change, if not None, should both be functions that expect a single string argument. on_cancel should be a function that expects no arguments. The view used for the input widget is returned.
 	**/

@@ -51,7 +51,7 @@ package sublime_plugin;
 		
 		sublime.HOVER_MARGIN: When the mouse is hovered in whitespace to the right of a line.
 	**/
-	function on_hover(point:String, hover_zone:Int):Void;
+	function on_hover(point:Int, hover_zone:Int):Void;
 	/**
 		Called when determining to trigger a key binding with the given context key. If the plugin knows how to respond to the context, it should return either True of False. If the context is unknown, it should return None.
 		

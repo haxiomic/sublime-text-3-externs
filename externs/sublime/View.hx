@@ -67,12 +67,12 @@ package sublime;
 	/**
 		Returns the contents of the region as a string.
 	**/
-	@:overload(function(point:String):String { })
+	@:overload(function(point:Int):String { })
 	function substr(region:sublime.Region):String;
 	/**
 		Inserts the given string in the buffer at the specified point. Returns the number of characters inserted: this may be different if tabs are being translated into spaces in the current buffer.
 	**/
-	function insert(edit:sublime.Edit, point:String, string:String):Int;
+	function insert(edit:sublime.Edit, point:Int, string:String):Int;
 	/**
 		Erases the contents of the region from the buffer.
 	**/
@@ -89,12 +89,12 @@ package sublime;
 		Returns the line that contains the point.
 	**/
 	@:overload(function(region:sublime.Region):sublime.Region { })
-	function line(point:String):sublime.Region;
+	function line(point:Int):sublime.Region;
 	/**
 		As line(), but the region includes the trailing newline character, if any.
 	**/
 	@:overload(function(region:sublime.Region):sublime.Region { })
-	function full_line(point:String):sublime.Region;
+	function full_line(point:Int):sublime.Region;
 	/**
 		Returns a list of lines (in sorted order) intersecting the region.
 	**/
@@ -107,7 +107,7 @@ package sublime;
 		Returns the word that contains the point.
 	**/
 	@:overload(function(region:sublime.Region):sublime.Region { })
-	function word(point:String):sublime.Region;
+	function word(point:Int):sublime.Region;
 	/**
 		Classifies point, returning a bitwise OR of zero or more of these flags:
 		
@@ -121,20 +121,20 @@ package sublime;
 		sublime.CLASS_LINE_END
 		sublime.CLASS_EMPTY_LINE
 	**/
-	function classify(point:String):Int;
+	function classify(point:Int):Int;
 	/**
 		Finds the next location after point that matches the given classes. If forward is False, searches backwards instead of forwards. classes is a bitwise OR of the sublime.CLASS_XXX flags. separators may be passed in, to define what characters should be considered to separate words.
 	**/
-	function find_by_class(point:String, forward:Bool, classes:Int, ?separators:String):sublime.Region;
+	function find_by_class(point:Int, forward:Bool, classes:Int, ?separators:String):sublime.Region;
 	/**
 		Expands point to the left and right, until each side lands on a location that matches classes. classes is a bitwise OR of the sublime.CLASS_XXX flags. separators may be passed in, to define what characters should be considered to separate words.
 	**/
 	@:overload(function(region:sublime.Region, classes:Int, ?separators:String):sublime.Region { })
-	function expand_by_class(point:String, classes:Int, ?separators:String):sublime.Region;
+	function expand_by_class(point:Int, classes:Int, ?separators:String):sublime.Region;
 	/**
 		Returns the first region matching the regex pattern, starting from start_point, or None if it can't be found. The optional flags parameter may be sublime.LITERAL, sublime.IGNORECASE, or the two ORed together.
 	**/
-	function find(pattern:EReg, start_point:String, ?flags:Bool):sublime.Region;
+	function find(pattern:EReg, start_point:Int, ?flags:Bool):sublime.Region;
 	/**
 		Returns all (non-overlapping) regions matching the regex pattern. The optional flags parameter may be sublime.LITERAL, sublime.IGNORECASE, or the two ORed together. If a format string is given, then all matches will be formatted with the formatted string and placed into the extractions list.
 	**/
@@ -142,11 +142,11 @@ package sublime;
 	/**
 		Calculates the 0-based line and column numbers of the point.
 	**/
-	function rowcol(point:String):python.Tuple.Tuple2<Int, Int>;
+	function rowcol(point:Int):python.Tuple.Tuple2<Int, Int>;
 	/**
 		Calculates the character offset of the given, 0-based, row and col. Note that col is interpreted as the number of characters to advance past the beginning of the row.
 	**/
-	function text_point(row:String, col:String):Int;
+	function text_point(row:Int, col:Int):Int;
 	/**
 		Changes the syntax used by the view. syntax_file should be a name along the lines of Packages/Python/Python.tmLanguage. To retrieve the current syntax, use view.settings().get('syntax').
 	**/
@@ -154,19 +154,19 @@ package sublime;
 	/**
 		Returns the extent of the syntax scope name assigned to the character at the given point.
 	**/
-	function extract_scope(point:String):sublime.Region;
+	function extract_scope(point:Int):sublime.Region;
 	/**
 		Returns the syntax scope name assigned to the character at the given point.
 	**/
-	function scope_name(point:String):String;
+	function scope_name(point:Int):String;
 	/**
 		Checks the selector against the scope at the given point, returning a bool if they match.
 	**/
-	function match_selector(point:String, selector:String):Bool;
+	function match_selector(point:Int, selector:String):Bool;
 	/**
 		Matches the selector against the scope at the given point, returning a score. A score of 0 means no match, above 0 means a match. Different selectors may be compared against the same scope: a higher score means the selector is a better match for the scope.
 	**/
-	function score_selector(point:String, selector:String):Int;
+	function score_selector(point:Int, selector:String):Int;
 	/**
 		Finds all regions in the file matching the given selector, returning them as a list.
 	**/
@@ -202,15 +202,15 @@ package sublime;
 	/**
 		Converts a text point to a layout position
 	**/
-	function text_to_layout(point:String):python.Tuple.Tuple2<Int, Int>;
+	function text_to_layout(point:Int):python.Tuple.Tuple2<Int, Int>;
 	/**
 		Converts a text point to a window position
 	**/
-	function text_to_window(point:String):python.Tuple.Tuple2<Int, Int>;
+	function text_to_window(point:Int):python.Tuple.Tuple2<Int, Int>;
 	/**
 		Converts a layout position to a text point
 	**/
-	function layout_to_text(vector:python.Tuple.Tuple2<Int, Int>):String;
+	function layout_to_text(vector:python.Tuple.Tuple2<Int, Int>):Int;
 	/**
 		Converts a layout position to a window position
 	**/
@@ -222,7 +222,7 @@ package sublime;
 	/**
 		Converts a window position to a text point
 	**/
-	function window_to_text(vector:python.Tuple.Tuple2<Int, Int>):String;
+	function window_to_text(vector:python.Tuple.Tuple2<Int, Int>):Int;
 	/**
 		Returns the light height used in the layout
 	**/
@@ -288,7 +288,7 @@ package sublime;
 		
 		Setting modifying_only to True (the default is False) will only return entries that modified the buffer.
 	**/
-	function command_history(index:String, ?modifying_only:Bool):python.Tuple.Tuple3<String, python.Dict<String, Any>, Int>;
+	function command_history(index:Int, ?modifying_only:Bool):python.Tuple.Tuple3<String, python.Dict<String, Any>, Int>;
 	/**
 		Returns the current change count. Each time the buffer is modified, the change count is incremented. The change count can be used to determine if the buffer has changed since the last it was inspected.
 	**/
@@ -358,7 +358,7 @@ package sublime;
 		
 		on_hide is called when the popup is hidden.
 	**/
-	function show_popup(content:String, ?flags:Bool, ?location:python.Tuple.Tuple3<String, String, python.Tuple.Tuple2<Int, Int>>, ?max_width:String, ?max_height:String, ?on_navigate:Any -> Void, ?on_hide:Any -> Void):Void;
+	function show_popup(content:String, ?flags:Bool, ?location:python.Tuple.Tuple3<String, String, python.Tuple.Tuple2<Int, Int>>, ?max_width:Int, ?max_height:Int, ?on_navigate:Any -> Void, ?on_hide:Any -> Void):Void;
 	/**
 		Updates the contents of the currently visible popup.
 	**/
