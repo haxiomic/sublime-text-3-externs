@@ -16,7 +16,7 @@ typedef Table = {
 
 class Main {
 
-	static inline var downloadLatest = false; 
+	static inline var downloadLatest = true; 
 	var sublimeApiUrl = 'https://www.sublimetext.com/docs/3/api_reference.html';
 	var downloadDir = 'api-reference';
 	var externDir = '../../externs';
