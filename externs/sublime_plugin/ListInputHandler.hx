@@ -9,7 +9,7 @@ package sublime_plugin;
 		
 		Optionally return a tuple of (list_items, selected_item_index) to indicate an initial selection.
 	**/
-	function list_items():Any;
+	function list_items():haxe.extern.EitherType<Array<String>, Array<python.Tuple.Tuple2<String, Any>>>;
 	/**
 		Placeholder text is shown in the text entry box before the user has entered anything. Empty by default.
 	**/
