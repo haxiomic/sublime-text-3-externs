@@ -234,7 +234,7 @@ package sublime;
 	/**
 		Add a set of regions to the view. If a set of regions already exists with the given key, they will be overwritten. The scope is used to source a color to draw the regions in, it should be the name of a scope, such as "comment" or "string". If the scope is empty, the regions won't be drawn.
 		
-		The optional icon name, if given, will draw the named icons in the gutter next to each region. The icon will be tinted using the color associated with the scope. Valid icon names are dot, circle, bookmark and cross. The icon name may also be a full package relative path, such as Packages/Theme - Default/dot.png.
+		The optional icon name, if given, will draw the named icons in the gutter next to each region. The icon will be tinted using the color associated with the scope. Valid icon names are dot, circle and bookmark. The icon name may also be a full package relative path, such as Packages/Theme - Default/dot.png.
 		
 		The optional flags parameter is a bitwise combination of:
 		

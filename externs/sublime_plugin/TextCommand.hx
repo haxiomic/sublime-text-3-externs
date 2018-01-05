@@ -20,4 +20,8 @@ package sublime_plugin;
 		Return True to receive an event argument when the command is triggered by a mouse action. The event information allows commands to determine which portion of the view was clicked on. The default implementation returns False.
 	**/
 	function want_event():Bool;
+	/**
+		If this returns something other than None, the user will be prompted for an input before the command is run in the Command Palette.
+	**/
+	function input(args:haxe.DynamicAccess<Any>):Null<Any>;
 }

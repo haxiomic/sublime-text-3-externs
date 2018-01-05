@@ -9,6 +9,38 @@ package sublime_plugin;
 	**/
 	function applies_to_primary_view_only():Bool;
 	/**
+		Called when the file is finished loading.
+	**/
+	function on_load():Void;
+	/**
+		Called when the file is finished loading. Runs in a separate thread, and does not block the application.
+	**/
+	function on_load_async():Void;
+	/**
+		Called when a view is about to be closed. The view will still be in the window at this point.
+	**/
+	function on_pre_close():Void;
+	/**
+		Called when a view is closed (note, there may still be other views into the same buffer).
+	**/
+	function on_close():Void;
+	/**
+		Called just before a view is saved.
+	**/
+	function on_pre_save():Void;
+	/**
+		Called just before a view is saved. Runs in a separate thread, and does not block the application.
+	**/
+	function on_pre_save_async():Void;
+	/**
+		Called after a view has been saved.
+	**/
+	function on_post_save():Void;
+	/**
+		Called after a view has been saved. Runs in a separate thread, and does not block the application.
+	**/
+	function on_post_save_async():Void;
+	/**
 		Called after changes have been made to the view.
 	**/
 	function on_modified():Void;
@@ -115,5 +147,13 @@ package sublime_plugin;
 		sublime.INHIBIT_WORD_COMPLETIONS | sublime.INHIBIT_EXPLICIT_COMPLETIONS
 		)
 	**/
-	function on_query_completions(prefix:String, locations:python.Tuple.Tuple3<String, String, python.Tuple.Tuple2<Int, Int>>):Any;
+	function on_query_completions(prefix:String, locations:python.Tuple.Tuple3<String, String, python.Tuple.Tuple2<Int, Int>>):Null<haxe.extern.EitherType<List<Any>, python.Tuple<Any>>>;
+	/**
+		Called when a text command is issued. The listener may return a (command, arguments) tuple to rewrite the command, or None to run the command unmodified.
+	**/
+	function on_text_command(command_name:String, args:haxe.DynamicAccess<Any>):python.Tuple.Tuple2<String, python.Dict<String, Any>>;
+	/**
+		Called after a text command has been executed.
+	**/
+	function on_post_text_command(command_name:String, args:haxe.DynamicAccess<Any>):Void;
 }

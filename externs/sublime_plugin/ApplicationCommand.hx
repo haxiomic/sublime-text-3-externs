@@ -20,4 +20,8 @@ package sublime_plugin;
 		Returns a description of the command with the given arguments. Used in the menu, if no caption is provided. Return None to get the default description.
 	**/
 	function description(?args:haxe.DynamicAccess<Any>):String;
+	/**
+		If this returns something other than None, the user will be prompted for an input before the command is run in the Command Palette.
+	**/
+	function input(args:haxe.DynamicAccess<Any>):Null<Any>;
 }
