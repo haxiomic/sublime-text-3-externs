@@ -360,8 +360,8 @@ class Main{
 				}
 			}
 
+			// Convert our types into :Either<T1, T2>
 			if (type == null) {
-
 				switch eitherTypes.length {
 					case 1:
 						type = eitherTypes[0];
@@ -369,11 +369,11 @@ class Main{
 						var t1 = eitherTypes[0];
 						var t2 = eitherTypes[1];
 						type = macro :haxe.extern.EitherType<$t1, $t2>;
-					case 3:
+					default:
+						// We could in principle support this with nested eithers but at the moment there's no cases in the API that require this
 						Console.warn('Cannot handle either-type with more than two types');
 						type = macro :Any;
 				}
-
 			}
 
 			// if one of the possible types is 'none' then wrap in Null<T> to document this
