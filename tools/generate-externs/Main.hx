@@ -14,8 +14,9 @@ typedef Table = {
 	rows: Array<Array<String>>
 }
 
-class Main{
+class Main {
 
+	static inline var downloadLatest = false; 
 	var sublimeApiUrl = 'https://www.sublimetext.com/docs/3/api_reference.html';
 	var downloadDir = 'api-reference';
 	var externDir = '../../externs';
@@ -26,27 +27,37 @@ class Main{
 	var enumRegister = new Array<String>();
 
 	function new(){
-		Console.log('Requesting "$sublimeApiUrl"');
-		var req = new haxe.Http(sublimeApiUrl);
+		if (downloadLatest) {
+			Console.log('Requesting "$sublimeApiUrl"');
+			var req = new haxe.Http(sublimeApiUrl);
+			req.onData = function(content: String){
+				// Save html to disk
+				sys.FileSystem.createDirectory(downloadDir);
+				sys.io.File.saveContent(haxe.io.Path.join([downloadDir, 'api-reference.html']), content);
+				Console.success('Saved "${haxe.io.Path.join([downloadDir, 'api-reference.html'])}"');
 
-		req.onData = function(content: String){
-			// Save html to disk
-			sys.FileSystem.createDirectory(downloadDir);
-			sys.io.File.saveContent(haxe.io.Path.join([downloadDir, 'api-reference.html']), content);
-			Console.log('Downloaded "$sublimeApiUrl"');
+				try {
+					processAPIDocs(content);
+				} catch (msg:String) {
+					Console.debug(msg);
+					throw msg;
+				}
+			}
 
+			req.onStatus = function(status:Int) Console.log('Request status $status');
+			req.onError = function(msg:String) Console.error(msg);
+
+			req.request();
+		} else {
+			// read api html from disk
 			try {
+				var content = sys.io.File.getContent(haxe.io.Path.join([downloadDir, 'api-reference.html']));
 				processAPIDocs(content);
 			} catch (msg:String) {
 				Console.debug(msg);
 				throw msg;
 			}
 		}
-
-		req.onStatus = function(status:Int) Console.log('Request status $status');
-		req.onError = function(msg:String) Console.error(msg);
-
-		req.request();
 	}
 
 	function processAPIDocs(content:String){
@@ -434,6 +445,9 @@ class Main{
 			case 'vector': return macro: python.Tuple.Tuple2<Int, Int>;
 			case 'tuple': return macro: python.Tuple<Any>; //@! needs review
 
+			// "CommandInputHandler: a subclass of either TextInputHandler or ListInputHandler."
+			case 'commandinputhandler': return macro: haxe.extern.EitherType<sublime_plugin.TextInputHandler, sublime_plugin.ListInputHandler>;
+
 			// less-precise 
 			case 'forward': return macro: Bool;
 			case 'animate': return macro: Bool;
@@ -445,7 +459,7 @@ class Main{
 
 			case 'group': return macro :Int;
 
-			// don't like this one bit
+			// don't like this one bit but it seems to be a convention in the API
 			case 'a': return macro :Int;
 			case 'b': return macro :Int;
 

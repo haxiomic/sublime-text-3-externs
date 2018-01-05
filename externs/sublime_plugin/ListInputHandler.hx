@@ -37,7 +37,7 @@ package sublime_plugin;
 	/**
 		Returns the next input after the user has completed this one. May return None to indicate no more input is required, or sublime_plugin.Back() to indicate that the input handler should be poped off the stack instead.
 	**/
-	function next_input(args:haxe.DynamicAccess<Any>):Null<Any>;
+	function next_input(args:haxe.DynamicAccess<Any>):Null<haxe.extern.EitherType<sublime_plugin.TextInputHandler, sublime_plugin.ListInputHandler>>;
 	/**
 		The text to show in the Command Palette when this input handler is not at the top of the input handler stack. Defaults to the text of the list item the user selected.
 	**/

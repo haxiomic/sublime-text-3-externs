@@ -19,5 +19,5 @@ package sublime_plugin;
 	/**
 		If this returns something other than None, the user will be prompted for an input before the command is run in the Command Palette.
 	**/
-	function input(args:haxe.DynamicAccess<Any>):Null<Any>;
+	function input(args:haxe.DynamicAccess<Any>):Null<haxe.extern.EitherType<sublime_plugin.TextInputHandler, sublime_plugin.ListInputHandler>>;
 }
