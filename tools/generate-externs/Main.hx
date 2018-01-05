@@ -5,7 +5,7 @@ import haxe.macro.Expr;
 abstract PythonType(String) {
 	var Module = 'module';
 	var Class = 'class';
-	@:from static inline function fromString(str:String):PythonType
+	@:from static inline public function fromString(str:String):PythonType
 		return untyped str.toLowerCase();
 }
 
@@ -17,7 +17,7 @@ typedef Table = {
 class Main{
 
 	var sublimeApiUrl = 'https://www.sublimetext.com/docs/3/api_reference.html';
-	var downloadDir = '_download';
+	var downloadDir = 'api-reference';
 	var externDir = '../../externs';
 	var titlePatern = ~/([\w.]+)\s+(Class|Module)/i;
 	var titleTagName = 'h2';
@@ -38,7 +38,7 @@ class Main{
 			try {
 				processAPIDocs(content);
 			} catch (msg:String) {
-				Console.error(msg);
+				Console.debug(msg);
 			}
 		}
 
@@ -68,7 +68,7 @@ class Main{
 			}
 
 			sections.push({
-				syntaxType: titlePatern.matched(2),
+				syntaxType: PythonType.fromString(titlePatern.matched(2)),
 				path: titlePatern.matched(1).split('.'),
 				tables: [
 					for(tableEl in getTables(el)) parseTable(tableEl)
@@ -104,7 +104,7 @@ class Main{
 			var expectedClassPath = parentIsClass ? pack.join('.') : pack.concat([toClassNameCase(parent)]).join('.');
 			var matchingTypes = haxeTypes.filter(function(type) return type.pack.concat([type.name]).join('.') == expectedClassPath);
 			if (matchingTypes.length == 0){
-				Console.warn('Could not find class for enum "$enumPath"');
+				Console.error('Could not find class for enum "$enumPath"');
 			}
 
 			matchingTypes[0].fields.push({
@@ -306,14 +306,19 @@ class Main{
 
 	function parseType(typeString:String):ComplexType {
 		// determine array depth
+		var arrayDepth = 0;
+		// if the type string is surrounded with square brackets then we count them to find the array depth
+		// if it doesn't conform to this pattern (like "[str] or [(str,value)]"), then array depth is 0
 		var arrayPattern = ~/^(\[*)([^\]]*)(\]*)$/;
-		arrayPattern.match(typeString);
-		var arrayDepth = arrayPattern.matched(1).length;
-		if (arrayDepth != arrayPattern.matched(3).length) {
-			throw 'Unmatched square brackets when parsing type "$typeString"';
+		var arrayPatternMatched = arrayPattern.match(typeString);
+		if (arrayPatternMatched) {
+			if (arrayPattern.matched(1).length != arrayPattern.matched(3).length) {
+				throw 'Unmatched square brackets when parsing type "$typeString"';
+			}
+			arrayDepth = arrayPattern.matched(1).length;
 		}
 
-		var typeInner = arrayPattern.matched(2);
+		var typeInner = arrayPatternMatched ? arrayPattern.matched(2) : typeString;
 		var type:ComplexType = null;
 
 		// try parsing as a tuple (non-recursive)
@@ -335,15 +340,45 @@ class Main{
 			});
 		}
 		else if(eitherPatern.match(typeInner)){
+			// extract individual type strings from the list
 			var eitherStrings = Lambda.array(Lambda.flatMap(typeInner.split(','), function(x){
 				return x.split('or');
 			}).map(StringTools.trim)).map(function(s) return s.toLowerCase());
 
-			type = switch (eitherStrings) {
-				// Special case of Null<T>
-				case [str, 'none'], ['none', str]:
-					var t = guessTypeFromName(str); macro :Null<$t>; 
-				default: null;
+			// find types for each of the type strings in the list
+			var eitherTypes = new Array<ComplexType>();
+			for(str in eitherStrings) {
+				if (str == 'none') continue; // skip 'none' type because this is handled separately
+				var t = guessTypeFromName(str);
+				switch t {
+					// if one of the types is unknown (i.e. Any), then don't bother with the :Either type
+					case TPath({name: 'Any'}):
+						type = macro :Any;
+						break;
+					default:
+						eitherTypes.push(t);
+				}
+			}
+
+			if (type == null) {
+
+				switch eitherTypes.length {
+					case 1:
+						type = eitherTypes[0];
+					case 2:
+						var t1 = eitherTypes[0];
+						var t2 = eitherTypes[1];
+						type = macro :haxe.extern.EitherType<$t1, $t2>;
+					case 3:
+						Console.warn('Cannot handle either-type with more than two types');
+						type = macro :Any;
+				}
+
+			}
+
+			// if one of the possible types is 'none' then wrap in Null<T> to document this
+			if (type != null && eitherStrings.indexOf('none') != -1) {
+				type = macro :Null<$type>;
 			}
 		}
 		// parse as plain old type name
@@ -487,7 +522,7 @@ class Main{
 
 	function extractEnums(tables:Array<Table>){
 		var enumPaths = new Array<String>();
-		var enumPattern = ~/(\w+\.)+([A-Z_0-9]+)/g;
+		var enumPattern = ~/\b(\w+\.)+([A-Z_0-9]+)\b/g;
 
 		for(table in tables){
 			var descriptionIdx = table.columns.indexOf('description');
@@ -643,7 +678,7 @@ class Main{
 		// console setup
 		Console.logPrefix = '<b><dim>    Log:<//> ';
 		Console.warnPrefix = '<b><yellow>Warning:<//> ';
-		Console.errorPrefix = '<b><red>  Error:<//> ';
+		Console.errorPrefix = '<b><red>  Error:</b> ';
 		Console.successPrefix = '<b><light_green>Success:<//> ';
 		new Main();
 	}
