@@ -325,8 +325,10 @@ class Main{
 		// try parsing as a tuple (non-recursive)
 		var tuplePattern = ~/^\(([\w\[\],\s]+)\)$/;
 		var typeNamePattern = ~/^(\w+)$/;
-		// var eitherPattern = ~/((\w+)\s*,\s*)*(\w+)\s+or\s+(\w+)/i;
+
 		// because it's a pain to distinguish between commas in tuples and commas separating either types we forbid tuples in the comma separated list
+		// in other words, TypeA, (TypeB, TypeC), TypeD is a pain in regex
+		// could improve but it does not yet occur in the API
 		var eitherPattern = ~/^((([^\s,()]+)(,\s)?)+)\sor\s([^\s]+)$/i;
 
 		if (tuplePattern.match(typeInner)){
@@ -344,16 +346,12 @@ class Main{
 		}
 		else if(eitherPattern.match(typeInner)){
 			// extract individual type strings from the list
-			// var eitherStrings = Lambda.array(Lambda.flatMap(typeInner.split(','), function(x){
-				// return x.split('or');
-			// }).map(StringTools.trim)).map(function(s) return s.toLowerCase());
-
 			// split the comma separate type list
 			var eitherStrings = eitherPattern.matched(1).split(',').map(function(s) return StringTools.trim(s).toLowerCase());
 			// add final type (i.e. 'or Type')
 			eitherStrings.push(eitherPattern.matched(5).toLowerCase());
 
-			// find types for each of the type strings in the list
+			// parse types for each of the type strings in the list
 			var eitherTypes = new Array<ComplexType>();
 			for(str in eitherStrings) {
 				if (str == 'none') continue; // skip 'none' type because this is handled separately
