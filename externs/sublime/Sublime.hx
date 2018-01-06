@@ -3,11 +3,11 @@ package sublime;
 	/**
 		Runs the callback in the main thread after the given delay (in milliseconds). Callbacks with an equal delay will be run in the order they were added.
 	**/
-	static function set_timeout(callback:Any -> Void, delay:Int):Void;
+	static function set_timeout(callback:?Any -> Void, delay:Int):Void;
 	/**
 		Runs the callback on an alternate thread after the given delay (in milliseconds).
 	**/
-	static function set_timeout_async(callback:Any -> Void, delay:Int):Void;
+	static function set_timeout_async(callback:?Any -> Void, delay:Int):Void;
 	/**
 		Displays an error dialog to the user.
 	**/

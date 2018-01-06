@@ -522,7 +522,7 @@ class Main {
 
 		// ends in a callback indicator
 		if (~/(callback)$/i.match(name) || ~/(^on_)/i.match(name)) {
-			return macro :Any->Void;
+			return macro :?Any->Void;
 		}
 
 		// ends in a string map indicator

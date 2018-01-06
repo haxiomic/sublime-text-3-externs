@@ -13,5 +13,5 @@ package sublime;
 		
 		on_navigate is an optional callback that should accept a single string parameter, that is the href attribute of the link clicked.
 	**/
-	function new(region:sublime.Region, content:String, layout:Int, ?on_navigate:Any -> Void);
+	function new(region:sublime.Region, content:String, layout:Int, ?on_navigate:?Any -> Void);
 }

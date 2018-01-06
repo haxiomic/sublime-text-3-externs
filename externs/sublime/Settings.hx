@@ -19,7 +19,7 @@ package sublime;
 	/**
 		Register a callback to be run whenever a setting in this object is changed.
 	**/
-	function add_on_change(key:String, on_change:Any -> Void):Void;
+	function add_on_change(key:String, on_change:?Any -> Void):Void;
 	/**
 		Remove all callbacks registered with the given key.
 	**/

@@ -338,7 +338,7 @@ package sublime;
 		
 		flags it currently unused.
 	**/
-	function show_popup_menu(items:String, on_done:Any -> Void, ?flags:Int):Void;
+	function show_popup_menu(items:String, on_done:?Any -> Void, ?flags:Int):Void;
 	/**
 		Shows a popup displaying HTML content.
 		
@@ -358,7 +358,7 @@ package sublime;
 		
 		on_hide is called when the popup is hidden.
 	**/
-	function show_popup(content:String, ?flags:Int, ?location:python.Tuple.Tuple3<String, String, python.Tuple.Tuple2<Int, Int>>, ?max_width:Int, ?max_height:Int, ?on_navigate:Any -> Void, ?on_hide:Any -> Void):Void;
+	function show_popup(content:String, ?flags:Int, ?location:python.Tuple.Tuple3<String, String, python.Tuple.Tuple2<Int, Int>>, ?max_width:Int, ?max_height:Int, ?on_navigate:?Any -> Void, ?on_hide:?Any -> Void):Void;
 	/**
 		Updates the contents of the currently visible popup.
 	**/

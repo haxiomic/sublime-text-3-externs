@@ -163,11 +163,11 @@ package sublime;
 		
 		on_highlighted, if given, will be called every time the highlighted item in the quick panel is changed.
 	**/
-	function show_quick_panel(items:String, on_done:Any -> Void, ?flags:Int, ?selected_index:Int, ?on_highlighted:Any -> Void):Void;
+	function show_quick_panel(items:String, on_done:?Any -> Void, ?flags:Int, ?selected_index:Int, ?on_highlighted:?Any -> Void):Void;
 	/**
 		Shows the input panel, to collect a line of input from the user. on_done and on_change, if not None, should both be functions that expect a single string argument. on_cancel should be a function that expects no arguments. The view used for the input widget is returned.
 	**/
-	function show_input_panel(caption:String, initial_text:String, on_done:Any -> Void, on_change:Any -> Void, on_cancel:Any -> Void):sublime.View;
+	function show_input_panel(caption:String, initial_text:String, on_done:?Any -> Void, on_change:?Any -> Void, on_cancel:?Any -> Void):sublime.View;
 	/**
 		Returns the view associated with the named output panel, creating it if required. The output panel can be shown by running the show_panel window command, with the panel argument set to the name with an "output." prefix.
 		
