@@ -275,7 +275,7 @@ class Main {
 			}
 		}
 
-		var name = methodPattern.matched(1);
+		var methodName = methodPattern.matched(1);
 		var argDefs = methodPattern.matched(2).split(',').map(StringTools.trim).filter(function(str) return str.length > 0);
 
 		// parse arguments
@@ -298,7 +298,7 @@ class Main {
 
 			var arrayDepth = arrayOpen.length;
 			var optional = argIsOptionalPattern.match(argDef);
-			var type = guessTypeFromName(name);
+			var type = guessTypeFromName(name, methodName);
 			// recursively wrap base type in Array<> for each array depth level
 			for(i in 0...arrayDepth)
 				type = macro :Array<$type>;
@@ -311,7 +311,7 @@ class Main {
 		}
 
 		return {
-			name: name,
+			name: methodName,
 			args: args
 		}
 	}
@@ -422,7 +422,14 @@ class Main {
 		}
 	}
 
-	function guessTypeFromName(name:String):ComplexType {
+	function guessTypeFromName(name:String, ?methodName:String):ComplexType {
+		// hard coded edge cases where the same name is used with different types
+		switch [name, methodName] {
+			case ['locations', 'on_query_completions']:
+				return macro :python.List<Int>;
+			default:
+		}
+
 		var plural = name.charAt(name.length - 1) == 's';
 		// remove trailing s for plurals
 		if (plural){
@@ -437,6 +444,7 @@ class Main {
 			case 'value': return macro :Any;
 			case 'default': return macro :Any;
 			case 'dip': return macro :Float;
+			case 'point': return macro :Int;
 			case 'int': return macro :Int;
 			case 'byte': return macro :python.Bytes;
 			case 'dict': return macro :python.Dict<String, Any>;
