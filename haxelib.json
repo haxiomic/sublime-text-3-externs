@@ -1,0 +1,12 @@
+{
+  "name": "sublime-text-3-externs",
+  "url": "https://github.com/haxiomic/sublime-text-3-externs",
+  "license": "MIT",
+  "tags": [ "sublime text", "3", "externs" ],
+  "description": "Complete haxe externs for sublime text 3's python API (auto-generated from API docs)",
+  "version": "0.1.0",
+  "classPath": "externs/",
+  "releasenote": "First release",
+  "contributors": ["haxiomic"],
+  "dependencies": {}
+}
