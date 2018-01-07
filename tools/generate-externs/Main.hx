@@ -426,7 +426,7 @@ class Main {
 		// hard coded edge cases where the same name is used with different types
 		switch [name, methodName] {
 			case ['locations', 'on_query_completions']:
-				return macro :python.List<Int>;
+				return macro :List<Int>;
 			default:
 		}
 

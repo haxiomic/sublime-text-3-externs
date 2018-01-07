@@ -147,7 +147,7 @@ package sublime_plugin;
 		sublime.INHIBIT_WORD_COMPLETIONS | sublime.INHIBIT_EXPLICIT_COMPLETIONS
 		)
 	**/
-	function on_query_completions(prefix:String, locations:python.List<Int>):Null<haxe.extern.EitherType<List<Any>, python.Tuple<Any>>>;
+	function on_query_completions(prefix:String, locations:List<Int>):Null<haxe.extern.EitherType<List<Any>, python.Tuple<Any>>>;
 	/**
 		Called when a text command is issued. The listener may return a (command, arguments) tuple to rewrite the command, or None to run the command unmodified.
 	**/
