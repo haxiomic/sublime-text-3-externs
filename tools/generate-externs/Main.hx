@@ -426,7 +426,7 @@ class Main {
 		// hard coded edge cases where the same name is used with different types
 		switch [name, methodName] {
 			case ['locations', 'on_query_completions']:
-				return macro :List<Int>;
+				return macro :Array<Int>;
 			default:
 		}
 
@@ -448,7 +448,7 @@ class Main {
 			case 'int': return macro :Int;
 			case 'byte': return macro :python.Bytes;
 			case 'dict': return macro :python.Dict<String, Any>;
-			case 'list': return macro :List<Any>; //@! needs review
+			case 'list': return macro :Array<Any>;
 			case 'location': return macro: python.Tuple.Tuple3<String, String, python.Tuple.Tuple2<Int, Int>>;
 			case 'vector': return macro: python.Tuple.Tuple2<Int, Int>;
 			case 'tuple': return macro: python.Tuple<Any>; //@! needs review
