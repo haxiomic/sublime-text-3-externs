@@ -204,7 +204,7 @@ class Main {
 							doc: cleanDoc(row[2]),
 							kind: FFun({args: methodDef.args, ret: parseType(row[1]), expr: null}),
 							pos: nullPos,
-							access: (row[0] == 'class methods' || type == Module) ? [AStatic] : [],
+							access: (table.columns[0] == 'class methods' || type == Module) ? [AStatic] : [],
 						});
 					}
 

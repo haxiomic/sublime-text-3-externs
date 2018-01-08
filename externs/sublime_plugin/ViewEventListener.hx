@@ -3,11 +3,11 @@ package sublime_plugin;
 	/**
 		A @classmethod that receives a Settings object and should return a bool indicating if this class applies to a view with those settings
 	**/
-	function is_applicable(settings:sublime.Settings):Bool;
+	static function is_applicable(settings:sublime.Settings):Bool;
 	/**
 		A @classmethod that should return a bool indicating if this class applies only to the primary view for a file. A view is considered primary if it is the only, or first, view into a file.
 	**/
-	function applies_to_primary_view_only():Bool;
+	static function applies_to_primary_view_only():Bool;
 	/**
 		Called when the file is finished loading.
 	**/
