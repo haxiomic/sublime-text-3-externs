@@ -239,7 +239,7 @@ class Main {
 			return null;
 		}
 
-		return {
+		var haxeType = {
 			pack: switch type {
 				case Class: path.slice(0, path.length - 1);
 				case Module: path;
@@ -254,6 +254,28 @@ class Main {
 			}],
 			fields: fields,
 			pos: nullPos,
+		}
+
+		insertMissingFields(haxeType);
+
+		return haxeType;
+	}
+
+	// The api docs miss out a few fields so they're hardcoded
+	// Remove this if the API is updated
+	function insertMissingFields(haxeType: TypeDefinition) {
+		switch [haxeType.pack.join('.'), haxeType.name] {
+			case ['sublime_plugin', 'WindowCommand']:
+				haxeType.fields = (macro class X {
+					var window: sublime.Window;
+					function new(window: sublime.Window);
+				}).fields.concat(haxeType.fields);
+			case ['sublime_plugin', 'ViewEventListener'],
+			     ['sublime_plugin', 'TextInputHandler']:
+				haxeType.fields = (macro class X {
+					var view: sublime.View;
+					function new(view: sublime.View);
+				}).fields.concat(haxeType.fields);
 		}
 	}
 

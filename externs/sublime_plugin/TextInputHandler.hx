@@ -1,5 +1,7 @@
 package sublime_plugin;
 @:pythonImport("sublime_plugin", "TextInputHandler") extern class TextInputHandler {
+	var view : sublime.View;
+	function new(view:sublime.View);
 	/**
 		The command argument name this input handler is editing. Defaults to foo_bar for an input handler named FooBarInputHandler
 	**/

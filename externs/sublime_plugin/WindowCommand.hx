@@ -1,5 +1,7 @@
 package sublime_plugin;
 @:pythonImport("sublime_plugin", "WindowCommand") extern class WindowCommand {
+	var window : sublime.Window;
+	function new(window:sublime.Window);
 	/**
 		Called when the command is run.
 	**/

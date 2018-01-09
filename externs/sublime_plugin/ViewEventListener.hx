@@ -1,5 +1,7 @@
 package sublime_plugin;
 @:pythonImport("sublime_plugin", "ViewEventListener") extern class ViewEventListener {
+	var view : sublime.View;
+	function new(view:sublime.View);
 	/**
 		A @classmethod that receives a Settings object and should return a bool indicating if this class applies to a view with those settings
 	**/
