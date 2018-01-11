@@ -153,7 +153,7 @@ package sublime;
 	/**
 		Runs the named WindowCommand with the (optional) given args. This method is able to run any sort of command, dispatching the command via input focus.
 	**/
-	function run_command(string:String, ?args:haxe.DynamicAccess<Any>):Void;
+	function run_command(string:String, ?args:python.Dict<String, Any>):Void;
 	/**
 		Shows a quick panel, to select an item in a list. on_done will be called once, with the index of the selected item. If the quick panel was cancelled, on_done will be called with an argument of -1.
 		

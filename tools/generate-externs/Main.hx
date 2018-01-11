@@ -557,7 +557,7 @@ class Main {
 
 		// ends in a string map indicator
 		if (~/(arg)$/i.match(name)) {
-			return macro :haxe.DynamicAccess<Any>;
+			return macro :python.Dict<String, Any>;
 		}
 
 		// ends in a regex indicator

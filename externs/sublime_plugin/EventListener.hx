@@ -159,17 +159,17 @@ package sublime_plugin;
 	/**
 		Called when a text command is issued. The listener may return a (command, arguments) tuple to rewrite the command, or None to run the command unmodified.
 	**/
-	function on_text_command(view:sublime.View, command_name:String, args:haxe.DynamicAccess<Any>):python.Tuple.Tuple2<String, python.Dict<String, Any>>;
+	function on_text_command(view:sublime.View, command_name:String, args:python.Dict<String, Any>):python.Tuple.Tuple2<String, python.Dict<String, Any>>;
 	/**
 		Called when a window command is issued. The listener may return a (command, arguments) tuple to rewrite the command, or None to run the command unmodified.
 	**/
-	function on_window_command(window:sublime.Window, command_name:String, args:haxe.DynamicAccess<Any>):python.Tuple.Tuple2<String, python.Dict<String, Any>>;
+	function on_window_command(window:sublime.Window, command_name:String, args:python.Dict<String, Any>):python.Tuple.Tuple2<String, python.Dict<String, Any>>;
 	/**
 		Called after a text command has been executed.
 	**/
-	function on_post_text_command(view:sublime.View, command_name:String, args:haxe.DynamicAccess<Any>):Void;
+	function on_post_text_command(view:sublime.View, command_name:String, args:python.Dict<String, Any>):Void;
 	/**
 		Called after a window command has been executed.
 	**/
-	function on_post_window_command(window:sublime.Window, command_name:String, args:haxe.DynamicAccess<Any>):Void;
+	function on_post_window_command(window:sublime.Window, command_name:String, args:python.Dict<String, Any>):Void;
 }

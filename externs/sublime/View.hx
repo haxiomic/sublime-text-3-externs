@@ -59,7 +59,7 @@ package sublime;
 	/**
 		Runs the named TextCommand with the (optional) given args.
 	**/
-	function run_command(string:String, ?args:haxe.DynamicAccess<Any>):Void;
+	function run_command(string:String, ?args:python.Dict<String, Any>):Void;
 	/**
 		Returns the number of character in the file.
 	**/

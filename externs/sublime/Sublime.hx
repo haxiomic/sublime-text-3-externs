@@ -91,7 +91,7 @@ package sublime;
 	/**
 		Runs the named ApplicationCommand with the (optional) given args.
 	**/
-	static function run_command(string:String, ?args:haxe.DynamicAccess<Any>):Void;
+	static function run_command(string:String, ?args:python.Dict<String, Any>):Void;
 	/**
 		Returns a list of the commands and args that compromise the currently recorded macro. Each dict will contain the keys command and args.
 	**/
