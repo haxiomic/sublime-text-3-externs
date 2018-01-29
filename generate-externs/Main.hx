@@ -19,7 +19,7 @@ class Main {
 	static inline var downloadLatest = true; 
 	var sublimeApiUrl = 'https://www.sublimetext.com/docs/3/api_reference.html';
 	var downloadDir = 'api-reference';
-	var externDir = '../../externs';
+	var externDir = '../externs';
 	var titlePatern = ~/([\w.]+)\s+(Class|Module)/i;
 	var titleTagName = 'h2';
 
