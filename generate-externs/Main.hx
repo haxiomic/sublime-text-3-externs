@@ -51,7 +51,9 @@ class Main {
 		} else {
 			// read api html from disk
 			try {
-				var content = sys.io.File.getContent(haxe.io.Path.join([downloadDir, 'api-reference.html']));
+				var path = haxe.io.Path.join([downloadDir, 'api-reference.html']);
+				Console.log('Reading API docs from disk: "${path}"');
+				var content = sys.io.File.getContent(path);
 				processAPIDocs(content);
 			} catch (msg:String) {
 				Console.debug(msg);
