@@ -35,7 +35,7 @@ package sublime_plugin;
 	**/
 	function confirm(value:Any):Void;
 	/**
-		Returns the next input after the user has completed this one. May return None to indicate no more input is required, or sublime_plugin.Back() to indicate that the input handler should be poped off the stack instead.
+		Returns the next input after the user has completed this one. May return None to indicate no more input is required, or sublime_plugin.BackInputHandler() to indicate that the input handler should be poped off the stack instead.
 	**/
 	function next_input(args:python.Dict<String, Any>):Null<haxe.extern.EitherType<sublime_plugin.TextInputHandler, sublime_plugin.ListInputHandler>>;
 	/**

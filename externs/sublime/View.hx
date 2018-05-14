@@ -375,4 +375,12 @@ package sublime;
 		Returns if the auto complete menu is currently visible.
 	**/
 	function is_auto_complete_visible():Bool;
+	/**
+		Returns a dict of the global style settings for the view. All colors are normalized to the six character hex form with a leading hash, e.g. #ff0000.
+	**/
+	function style():python.Dict<String, Any>;
+	/**
+		Accepts a string scope name and returns a dict of style information, include the keys foreground, bold, italic, source_line, source_column and source_file. If the scope has a background color set, the key background will be present. The foreground and background colors are normalized to the six character hex form with a leading hash, e.g. #ff0000.
+	**/
+	function style_for_scope(scope_name:String):python.Dict<String, Any>;
 }
