@@ -105,7 +105,7 @@ package sublime_plugin;
 		
 		match_all should be used if the context relates to the selections: does every selection have to match (match_all == True), or is at least one matching enough (match_all == False)?
 	**/
-	function on_query_context(key:String, operator:Int, operand:Any, match_all:Bool):Null<Bool>;
+	function on_query_context(key:String, _operator:Int, operand:Any, match_all:Bool):Null<Bool>;
 	/**
 		Called whenever completions are to be presented to the user. The prefix is a unicode string of the text to complete.
 		

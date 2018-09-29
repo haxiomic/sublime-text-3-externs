@@ -278,6 +278,7 @@ class Main {
 					var view: sublime.View;
 					function new(view: sublime.View);
 				}).fields.concat(haxeType.fields);
+			default:
 		}
 	}
 
@@ -684,46 +685,14 @@ class Main {
 
 	static var nullPos = { min:0, max:0, file:"" };
 	static var disallowedNames = [
-		'break',
-		'case',
-		'cast',
-		'catch',
-		'class',
-		'continue',
-		'default',
-		'do',
-		'dynamic',
-		'else',
-		'enum',
-		'extends',
-		'extern',
-		'false',
-		'for',
-		'function',
-		'if',
-		'implements',
-		'import',
-		'in',
-		'inline',
-		'interface',
-		'new',
-		'null',
-		'override',
-		'package',
-		'private',
-		'public',
-		'return',
-		'static',
-		'switch',
-		'this',
-		'throw',
-		'true',
-		'try',
-		'typedef',
-		'untyped',
-		'using',
-		'var',
-		'while'
+		// see core/ast.ml
+		"public", "private", "static", "override", "dynamic", "inline", "macro",
+		"final", "extern", "function", "class", "static", "var", "if", "else", "while",
+		"do", "for", "break", "return", "continue", "extends", "implements", "import",
+		"switch", "case", "default", "private", "public", "try", "catch", "new", "this",
+		"throw", "extern", "enum", "in", "interface", "untyped", "cast", "override",
+		"typedef", "dynamic", "package", "inline", "using", "null", "true", "false",
+		"abstract", "macro", "final", "operator", "overload",
 	];
 
 	static function main() {
