@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=480, user-scalable=yes">
     <link href="https://fonts.googleapis.com/css?family=Lato:400,400i,700,700i|Roboto+Mono:400,700" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="/sublime_v3.css">
+    <link rel="stylesheet" type="text/css" href="/sublime_v3.css?d=190313">
     <link rel="icon" href="/favicon.ico">
     <link rel="icon" size="64x64" href="/favicon.ico">
     <link rel="icon" sizes="192x192" href="/images/icon.png">
@@ -52,9 +52,10 @@
             <nav>
                 <a href="/3">Download</a>
                 <a href="/buy?v=3.0">Buy</a>
+                <a href="/support">Support</a>
+                <span class="vr"></span>
                 <a href="/blog/">News</a>
                 <a href="https://forum.sublimetext.com">Forum</a>
-                <a href="/support">Support</a>
             </nav>
         </section>
     </header>
@@ -136,12 +137,6 @@
 
         <ul>
             <li>
-                <span class="file">Packages/Default/delete_word.py</span> Deletes a word to the left or right of the cursor
-            </li>
-            <li>
-                <span class="file">Packages/Default/duplicate_line.py</span> Duplicates the current line
-            </li>
-            <li>
                 <span class="file">Packages/Default/exec.py</span> Uses phantoms to display errors inline
             </li>
             <li>
@@ -155,9 +150,6 @@
             </li>
             <li>
                 <span class="file">Packages/Default/show_scope_name.py</span> Uses a popup to show the scope names at the caret
-            </li>
-            <li>
-                <span class="file">Packages/Default/trim_trailing_whitespace.py</span> Modifies a buffer just before its saved
             </li>
             <li>
                 <span class="file">Packages/Default/arithmetic.py</span> Accepts an input from the user when run via the Command Palette
@@ -1200,6 +1192,20 @@
                 <td class="rtn">dict</td>
                 <td class="dsc">
                     Accepts a string scope name and returns a <tt>dict</tt> of style information, include the keys <tt>foreground</tt>, <tt>bold</tt>, <tt>italic</tt>, <tt>source_line</tt>, <tt>source_column</tt> and <tt>source_file</tt>. If the scope has a background color set, the key <tt>background</tt> will be present. <i>The foreground and background colors are normalized to the six character hex form with a leading hash, e.g. <tt>#ff0000</tt>.</i>
+                </td>
+            </tr>
+            <tr>
+                <td class="mth">set_reference_document(reference)</td>
+                <td class="rtn">None</td>
+                <td class="dsc">
+                    Uses the string <tt>reference</tt> to calculate the initial diff for the <a href="incremental_diff.html">incremental diff</a>
+                </td>
+            </tr>
+            <tr>
+                <td class="mth">reset_reference_document()</td>
+                <td class="rtn">None</td>
+                <td class="dsc">
+                    Clears the state of the <a href="incremental_diff.html">incremental diff</a> for the view
                 </td>
             </tr>
         </table>
@@ -2890,7 +2896,9 @@
     </main>
     <footer>
         <section>
-            © Sublime HQ Pty Ltd
+            © <a href="https://www.sublimehq.com">Sublime HQ Pty Ltd</a>
+
+            <p>Woollahra, Sydney.
         </section>
     </footer>
     <!--[if lt IE 9]>

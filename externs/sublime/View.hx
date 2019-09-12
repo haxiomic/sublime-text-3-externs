@@ -383,4 +383,12 @@ package sublime;
 		Accepts a string scope name and returns a dict of style information, include the keys foreground, bold, italic, source_line, source_column and source_file. If the scope has a background color set, the key background will be present. The foreground and background colors are normalized to the six character hex form with a leading hash, e.g. #ff0000.
 	**/
 	function style_for_scope(scope_name:String):python.Dict<String, Any>;
+	/**
+		Uses the string reference to calculate the initial diff for the incremental diff
+	**/
+	function set_reference_document(reference:Any):Void;
+	/**
+		Clears the state of the incremental diff for the view
+	**/
+	function reset_reference_document():Void;
 }
