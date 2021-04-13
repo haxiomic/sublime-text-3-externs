@@ -1,6 +1,5 @@
 -main Main
-#haxelib git hxnodejs https://github.com/HaxeFoundation/hxnodejs
--lib hxnodejs:git
+-lib hxnodejs:git:https://github.com/HaxeFoundation/hxnodejs
 -lib console.hx
 -cp lib
 -js _built/index.js

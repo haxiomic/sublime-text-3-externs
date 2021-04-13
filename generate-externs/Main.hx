@@ -251,7 +251,9 @@ class Main {
 			name: toClassNameCase(path[path.length-1]),
 			meta: [{
 				name: ':pythonImport',
-				params: path.map(function(p) return macro '$p'),
+				params: path.map(function(p: String): Expr {
+					return {expr: EConst(CString(p)), pos: null}
+				}),
 				pos: nullPos
 			}],
 			fields: fields,
